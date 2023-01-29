@@ -10,7 +10,7 @@ const Joi = require("joi");
 (async () => {
   const server = Hapi.server({
     port: 3000,
-    host: "localhost",
+    host: "0.0.0.0",
   });
 
   /**SWAGGER---------------------------------------------- */
@@ -18,8 +18,6 @@ const Joi = require("joi");
     info: {
       title: "API Documentation Services Analysis",
       version: Pack.version,
-      host: "sua-analiza.herokuapp.com",
-      schemes: ["http"],
     },
   };
 
