@@ -31,8 +31,6 @@ const Joi = require("joi");
   ]);
   /**SWAGGER---------------------------------------------- */
 
-  console.log("Code changed");
-
   /**PODATKOVNA BAZA-------------------------------------- */
   Mongoose.connect(process.env.MONGO_URI)
     .then(() => {
