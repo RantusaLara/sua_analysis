@@ -1,0 +1,66 @@
+[
+    {
+        "url":"/register",
+        "calls": 0
+    },
+    {
+        "url":"/login",
+        "calls": 0
+    },
+    {
+        "url":"/logout",
+        "calls": 0
+    },
+    {
+        "url":"get/:id",
+        "calls": 0
+    },
+    {
+        "url":"put/:id",
+        "calls": 0
+    },
+    {
+        "url":"delete/:id",
+        "calls": 0
+    },
+    {
+        "url":"/send-conformation-email/:id",
+        "calls": 0
+    },
+    {
+        "url":"/conform-email/:conformation_string",
+        "calls": 0
+    },
+    {
+        "url":"/card",
+        "calls": 0
+    },
+    {
+        "url":"get/card/:id",
+        "calls": 0
+    },
+    {
+        "url":"put/card/:id",
+        "calls": 0
+    },
+    {
+        "url":"delete/card/:id",
+        "calls": 0
+    },
+    {
+        "url":"/transactions",
+        "calls": 0
+    },
+    {
+        "url":"/transactions/:card_id",
+        "calls": 0
+    },
+    {
+        "url":"/transactions/datetime/:type",
+        "calls": 0
+    },
+    {
+        "url":"/transactions/amount/:type",
+        "calls": 0
+    }
+]

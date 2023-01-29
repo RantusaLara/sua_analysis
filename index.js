@@ -75,13 +75,13 @@ const Joi = require("joi");
       options: {
         tags: ["api"], //SWAGGER
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         try {
-          const analysis = AnalysisModel.find();
+          const analysis = await AnalysisModel.find();
           return h.response(analysis).code(201);
         } catch (error) {
           return h
-            .response({ content: "Server error." + error, error: true })
+            .response({ content: "Server error. " + error, error: true })
             .code(500);
         }
       },
@@ -92,32 +92,36 @@ const Joi = require("joi");
       options: {
         tags: ["api"], //SWAGGER
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         try {
-          let analysis = AnalysisModel.find();
-          analysis = analysis.sort({ calls: -1 });
+          let analysis = await AnalysisModel.find({
+            last_called: { $exists: true },
+          }).lean();
+          analysis = analysis.sort(
+            (a, b) => b.last_called.getTime() - a.last_called.getTime()
+          );
           return h.response(analysis[0]).code(201);
         } catch (error) {
           return h
-            .response({ content: "Server error." + error, error: true })
+            .response({ content: "Server error. " + error, error: true })
             .code(500);
         }
       },
     },
     {
       method: "GET",
-      path: "/latest",
+      path: "/max",
       options: {
         tags: ["api"], //SWAGGER
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         try {
-          let analysis = AnalysisModel.find();
-          analysis = analysis.sort({ last_called: -1 });
+          let analysis = await AnalysisModel.find().lean();
+          analysis = analysis.sort((a, b) => b.calls - a.calls);
           return h.response(analysis[0]).code(201);
         } catch (error) {
           return h
-            .response({ content: "Server error." + error, error: true })
+            .response({ content: "Server error. " + error, error: true })
             .code(500);
         }
       },
@@ -133,27 +137,32 @@ const Joi = require("joi");
           }),
         },
       },
-      handler: (request, h) => {
+      handler: async (request, h) => {
         try {
-          const url = request.body.url;
-          const data = AnalysisModel.findOne({ url: url });
+          const url = request.payload.url;
+          const data = await AnalysisModel.findOne({ url: url });
           if (data == undefined)
             return h
               .response({ message: "Url not found", error: true })
               .code(404);
-          AnalysisModel.updateOne(
+          const resp = await AnalysisModel.updateOne(
             { url: url },
             {
               $set: {
-                calls: data.calls++,
+                calls: ++data.calls,
                 last_called: new Date(),
               },
             }
           );
-          return h.response({ message: "Updated", error: false }).code(201);
+          return h
+            .response({
+              message: "Updated. " + resp.modifiedCount,
+              error: false,
+            })
+            .code(201);
         } catch (error) {
           return h
-            .response({ content: "Server error." + error, error: true })
+            .response({ content: "Server error. " + error, error: true })
             .code(500);
         }
       },
