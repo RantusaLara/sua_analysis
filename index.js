@@ -19,7 +19,7 @@ const Joi = require("joi");
       title: "API Documentation Services Analysis",
       version: Pack.version,
       host: "sua-analiza.herokuapp.com",
-      schemes: ["https"],
+      schemes: ["http"],
     },
   };
 
