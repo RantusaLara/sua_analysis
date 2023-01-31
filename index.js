@@ -13,6 +13,16 @@ const Joi = require("joi");
     port: process.env.PORT || 3000,
   });
 
+  /**CORS-------------------------------------------- */
+  await server.register({
+    plugin: require("hapi-cors"),
+    options: {
+      origins: ["*"],
+      methods: ["GET", "POST", "PUT", "DELETE"],
+    },
+  });
+  /**CORS-------------------------------------------- */
+
   /**SWAGGER---------------------------------------------- */
   const swaggerOptions = {
     info: {
