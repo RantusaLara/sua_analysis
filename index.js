@@ -13,7 +13,7 @@ const Joi = require("joi");
     port: process.env.PORT || 3000,
   });
 
-  /**CORS-------------------------------------------- */
+  /**CORS------------------------------------------- */
   await server.register({
     plugin: require("hapi-cors"),
     options: {
